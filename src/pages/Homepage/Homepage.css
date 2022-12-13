@@ -2,3 +2,7 @@
     margin-top: var(--header-height);
     color: var(--white);
 }
+
+.movies-wrapper{
+    display: flex;
+}
