@@ -26,7 +26,7 @@ function Slider() {
             //call api to get upcoming movies
             axios.get(`${baseUrl}/movie/upcoming?api_key=${apiKey}`)
             .then(res =>{
-                console.log(res.data.results);
+                // console.log(res.data.results);
                 setUpcomingMovies(res.data.results);
                 //divide votes by 2 to set the current rating
                 let rating = Math.round((res.data.results[0]?.vote_average)/2);
