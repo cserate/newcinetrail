@@ -6,3 +6,13 @@
 .movies-wrapper{
     display: flex;
 }
+
+.popular-cards-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.top-rated-container{
+    width: 40%;
+}
+
