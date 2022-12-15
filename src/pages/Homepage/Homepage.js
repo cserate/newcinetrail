@@ -1,20 +1,36 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Slider from '../../components/Header/Slider/Slider'
 import MovieCard from '../../components/MovieCard/MovieCard';
 import './Homepage.css'
 import axios from 'axios';
+import { ThemeContext } from '../../contexts/ThemeContext';
+
 
 
 function Homepage() {
   const apiKey = process.env.REACT_APP_API_KEY;
   const baseUrl = process.env.REACT_APP_BASE_URL;
+  //access the global state using context
+  //note CURLY brackets here
+    const {darkMode, setDarkMode} = useContext(ThemeContext)
 
-    //call api when the component loads
+  //create an array with page numbers
+  const pageNumbers = [1,2,3,4,5,6,7,8,9,10];
+
+   //create state to hold popular movies
+   const [popularMovies, setPopularMovies] = React.useState([])
+   //create state to hold top rated movies
+   const [topRatedMovies, setTopRatedMovies] = React.useState([])
+   //create state to hold page numbers
+   const [page,setPage] = React.useState ([1])
+
+
+    //call api when the component loads with a page dependency
     React.useEffect(
       ()=>{
           
           //call api to get popular movies
-          axios.get(`${baseUrl}/movie/popular?api_key=${apiKey}&page=1`)
+          axios.get(`${baseUrl}/movie/popular?api_key=${apiKey}&page=${page}`)
           // https://api.themoviedb.org/3/movie/popular?api_key=d6436bb18d070d5e4de2901cd97c9adf&page=1
           .then(res =>{
               // console.log(res.data.results);
@@ -29,19 +45,29 @@ function Homepage() {
           .then(res =>{
               console.log(res.data.results);
               //store data from api into state
-             setTopRatedMovies(res.data.results)
+             setTopRatedMovies(res.data.results.slice(0, 10));
           })
           .catch(err => console.log(err))
-      }, []
+      }, [page]
   )
-  //create state to hold popular movies
-  const [popularMovies, setPopularMovies] = React.useState([])
-  //create state to hold top rated movies
-  const [topRatedMovies, setTopRatedMovies] = React.useState([])
+   //call api once to get top rated movies
+  React.useEffect(
+    ()=>{
+     
+      axios.get(`${baseUrl}/movie/top_rated?api_key=${apiKey}&page=1`)
+          
+      .then(res =>{
+          console.log(res.data.results);
+          //store data from api into state
+         setTopRatedMovies(res.data.results.slice(0, 10));
+      })
+      .catch(err => console.log(err))
+  }, []
+)
 
   return (
 
-    <div className='homepage-container'>
+    <div className={darkMode ? "homepage-container" : "homepage-container homepage-light"}>
         <Slider /> 
         <div className='movies-wrapper'>
           <div className='popular-container'>
@@ -59,7 +85,12 @@ function Homepage() {
               }
               
             </div>
-            <div className='page-numbers'>Page Numbers</div>
+            <div className='page-numbers'>
+              <p>Select Page</p>
+              {
+                pageNumbers.map(num => <p onClick={()=>setPage(num)}>{num}</p>)
+              }
+            </div>
           </div>
           <div className='top-rated-container'>
             <h3>Top Rated Movies</h3>
