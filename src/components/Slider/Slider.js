@@ -2,6 +2,8 @@ import React from 'react'
 import './Slider.css'
 import axios from 'axios'
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import StarRatings from 'react-star-ratings';
+
 
 function Slider() {
     const apiKey = process.env.REACT_APP_API_KEY;
@@ -13,9 +15,10 @@ function Slider() {
     const [upcomingMovies, setUpcomingMovies] = React.useState([])
     //create state to advance movies
     const [index, setIndex] = React.useState(0);
-    
+    //create state for rating
+    const {currentRating, setCurrentRating} = React.useState(0);
+
     //call api for data when the components loads
-    
     React.useEffect(
         ()=>{
 
@@ -23,8 +26,11 @@ function Slider() {
             //call api to get upcoming movies
             axios.get(`${baseUrl}/movie/upcoming?api_key=${apiKey}`)
             .then(res =>{
-                console.log(res.data.results);
+                // console.log(res.data.results);
                 setUpcomingMovies(res.data.results);
+                //divide votes by 2 to set the current rating
+                let rating = Math.round((res.data.results[0]?.vote_average)/2);
+                setCurrentRating(rating);
             })
             .catch(err => console.log(err))
 
@@ -44,7 +50,6 @@ function Slider() {
         //when you get to 0, wrap to the end of the array
         index === 0?
         setIndex(upcomingMovies.length - 1):
-       
         setIndex (index-1);
 
     }
@@ -70,7 +75,15 @@ function Slider() {
             <h1>{upcomingMovies[index]?.title}</h1>
             <p>{upcomingMovies[index]?.overview.slice(0,150)}</p>
             <p>Release Date: {upcomingMovies[index]?.release_date}</p>
-
+            <StarRatings
+          rating={currentRating}
+          starRatedColor="red"
+          numberOfStars={5}
+          name='rating'
+          starDimension='15px'
+          starSpacing='1px'
+        />
+        <p className='see-details'>See Details</p>
         </div>
     </div>
   )
