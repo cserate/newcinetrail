@@ -1,6 +1,7 @@
 .homepage-container{
     margin-top: var(--header-height);
     color: var(--white);
+    min-height: 100vh;
 }
 
 .homepage-light{
@@ -16,11 +17,21 @@
     display: flex;
     flex-wrap: wrap;
 }
+/* .popular-container {
+    margin: 10px;
+} */
+
+/* .popular-container > h3{
+    margin: 10px;
+} */
 
 .top-rated-container{
     width: 40%;
 }
 
+/* .top-rated-container> h3{
+    margin: 20px;
+} */
 .page-numbers{
     display: flex;
     justify-content: space-around;

@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import Slider from '../../components/Header/Slider/Slider'
+import Slider from '../../components/Slider/Slider';
 import MovieCard from '../../components/MovieCard/MovieCard';
 import './Homepage.css'
 import axios from 'axios';
