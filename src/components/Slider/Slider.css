@@ -21,11 +21,15 @@
 
 }
 .movie-info{
-    /* margin: 20px; */
+    margin: 15px;
     position: absolute;
     bottom: 0;
     color: var(--white);
     width: 50%;
     
 
+}
+
+.see-details{
+    color: var(--white);
 }
