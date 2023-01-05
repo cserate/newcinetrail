@@ -83,6 +83,9 @@ function MovieDetails() {
             <p>No trailers released yet</p>
           </div>
         }
+        <div className='info-container'>
+          {movie?.original_title}
+        </div>
     </div>
         )
       }
