@@ -3,6 +3,7 @@ import './Slider.css'
 import axios from 'axios'
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import StarRatings from 'react-star-ratings';
+import { Link } from 'react-router-dom';
 
 
 function Slider() {
@@ -83,7 +84,9 @@ function Slider() {
           starDimension='15px'
           starSpacing='1px'
         />
-        <p className='see-details'>See Details</p>
+        <Link to={`/moviedetails/${upcomingMovies[index]?.id}`}>
+        <p className='see-details' >See Details</p>
+        </Link>
         </div>
     </div>
   )
